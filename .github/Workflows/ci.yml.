@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Run tests
+      run: |
+        npm test
+
+    - name: Build project
+      run: |
+        npm run build
+
+    - name: Deploy to Glitch
+      env:
+        GLITCH_PROJECT_ID: ${{secrets.GLITCH_PROJECT_ID}}
+        GLITCH_API_TOKEN: ${{secrets.GLITCH_API_TOKEN}}
+      run: |
+        curl -X POST https://api.glitch.com/projects/${{ env.GLITCH_PROJECT_ID }}/git/import \
+          -d '{"url": "https://github.com/your-username/your-repo.git"}' \
+          -H "Authorization: Bearer ${{ env.GLITCH_API_TOKEN }}"
