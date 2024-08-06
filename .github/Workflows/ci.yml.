@@ -18,6 +18,6 @@ jobs:
         GLITCH_PROJECT: ${{ secrets.GLITCH_PROJECT }}
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        curl -X POST https://api.glitch.com/projects/${{ env.GLITCH_PROJECT }}/git/import \
+        curl -X POST https://api.glitch.com/projects/${{ secrets.GLITCH_PROJECT }}/git/import \
           -d '{"url": "https://github.com/tsukiryuu/pig-chug.git"}' \
-          -H "Authorization: Bearer ${{ env.GH_TOKEN }}"
+          -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}"
