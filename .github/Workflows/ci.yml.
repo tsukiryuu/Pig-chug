@@ -15,9 +15,10 @@ jobs:
 
     - name: Deploy to Glitch
       env:
-        GLITCH_PROJECT: ${{ secrets.GLITCH_PROJECT }}
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GLITCH_GIT_URL: https://72cba5a9-5876-452b-8a31-a910ea77a485@api.glitch.com/git/bony-nasal-postage
+        GLITCH_API_TOKEN: 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
+        GLITCH_PROJECT: bony-nasal-postage
       run: |
-        curl -X POST https://api.glitch.com/projects/${{ secrets.GLITCH_PROJECT }}/git/import \
-          -d '{"url": "https://github.com/tsukiryuu/pig-chug.git"}' \
-          -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}"
+        curl -X POST "https://api.glitch.com/projects/${{ env.GLITCH_PROJECT }}/git/import" \
+          -d '{"url": "${{ env.GLITCH_GIT_URL }}"}' \
+          -H "Authorization: Bearer ${{ env.GLITCH_API_TOKEN }}"
